@@ -20,8 +20,6 @@ For this challenge we set out to attempt to develop a system that tracks the beh
 
 Our primary goal was to locate people moving through the camera’s field of view on the 2D ground plane. This helped us track how people move through the space and identify areas of particular interest. Initially, we needed to differentiate people from objects. To address that, we tested two facial recognition algorithms, the Haar classifier and the Support Vector Machines, that both yielded unsatisfactory mAP values in our test set. Instead, we decided to use a type of Convolutional Neural Network (CNNs) algorithm.
 
-<p align="center"><img src="https://github.com/egeozin/BenchMark-Project-Data-Analysis/blob/master/imgs/observation.png" width="500"/></p>
-
 We decided to use the Faster R-CNN (Regions with CNN) algorithm with a pre-trained model that is trained with a large set of images belonging to certain classes. The main difference between a CNN and the Faster R-CNN method is that the latter is calibrated to detect multiple objects and their boundaries in an image.
 
 ## Data Analysis
