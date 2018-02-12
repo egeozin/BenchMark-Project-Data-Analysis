@@ -10,8 +10,6 @@ The Benchmark project investigates how we can use technology to better measure a
 
 <p align="center"><img src="https://github.com/egeozin/BenchMark-Project-Data-Analysis/blob/master/imgs/observation.png" width="500"/></p>
 
-## Measurements
-
 The Gehl method entails a human researcher observing individuals’ movements through space and tracking their behavior. A human researcher looks at a person and tracks his or her position and activities over time. This manual process is generally superior to digital analysis because state- of-the-art computer vision algorithms have limited ability to determine whether one individual in a picture shows up in a series of sequential frames.
 
 For this challenge we set out to attempt to develop a system that tracks the behavior of individuals through time without identifying them. Furthermore, we aimed to capture temporal patterns of inhabitation such as individuals' use of, and interaction within the space and with other individuals in the space. As a result, we used the GoPro cameras embedded in one of our furniture to collect images of the place of interest in certain frequencies.
@@ -22,7 +20,7 @@ Our primary goal was to locate people moving through the camera’s field of vie
 
 We decided to use the Faster R-CNN (Regions with CNN) algorithm with a pre-trained model that is trained with a large set of images belonging to certain classes. The main difference between a CNN and the Faster R-CNN method is that the latter is calibrated to detect multiple objects and their boundaries in an image.
 
-## Data Analysis
+## Analysis
 
 Utilizing Faster R-CNN for detecting people yielded vastly superior results. We used the results derived from the Faster R-CNN algorithm to compute the number of people present at our site in a single time frame and whether they stayed on the site over multiple time frames that in total comprised a duration less 30 seconds.
 
@@ -36,7 +34,7 @@ However, as this process turned out to be time-consuming, we came up with a bett
 
 The table above shows the comparison of the visual detectors utilized in the Benchmark project. For the Benchmark project we trained a pre-trained YOLO network with a novel dataset. Our new dataset contained 150 images belonging to each new classes (bench, sit, backrest). Usually, in order to train neural networks with new classes, compiling a dataset with more than 1000 examples for each class is considered good practice. However, the detection performance we got from the YOLO network was promising given that YOLO method helps us to considerably increase the mean average precision (mAP) with smaller amount of data compared to other methods. Furthermore, in its current state, the YOLO method which we trained with our dataset proven to be suitable to be deployed to the various mobile devices (e.g. Raspberry Pi). The reason is that we can trade-off a certain amount of accuracy against the speed-up we gain in processing frames which is shown to be equally important in this setting. In terms of the number of frames processed per second (FPS), YOLO is superior compared to the Faster R-CNN algorithm. In other words, necessary predictions can be computed reliably in the field without storing the images in a temporary database. Therefore we used these predictions for calculating the number of pedestrians visiting the site and computing various indices for measuring public interaction. We used these indices to measure stationary interactions.
 
-### Stationary interactions
+### Stationary Interactions
 
 Stationary interactions are key proxies for measuring the performance of public space. By asking questions on whether people are sitting on the benches and how people are moving the benches around allowed us to better understand how people are actually engaging and using the space.
 
