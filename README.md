@@ -12,7 +12,7 @@ The Benchmark project investigates how we can use technology to better measure a
 
 The Gehl method entails a human researcher observing individuals’ movements through space and tracking their behavior. A human researcher looks at a person and tracks his or her position and activities over time. This manual process is generally superior to digital analysis because state- of-the-art computer vision algorithms have limited ability to determine whether one individual in a picture shows up in a series of sequential frames.
 
-For this challenge we set out to attempt to develop a system that tracks the behavior of individuals through time without identifying them. Furthermore, we aimed to capture temporal patterns of inhabitation such as individuals' use of, and interaction within the space and with other individuals in the space. As a result, we used the GoPro cameras embedded in one of our furniture to collect images of the place of interest in certain frequencies.
+For this challenge we set out to attempt to develop a system that tracks the behavior of individuals through time without identifying them. Furthermore, we aimed to capture temporal patterns of inhabitation such as individuals' use of, and interaction within the space and with other individuals in the space. As a result, we used the GoPro cameras embedded in one of our furnitures to collect images of the place of interest.
 
 ## Methods
 
