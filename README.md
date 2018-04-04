@@ -2,7 +2,7 @@
 
 # BenchMark
 
-http://civicdatadesignlab.mit.edu/
+http://benchmark.mit.edu/
 
 One of the most challenging problems facing urban designers and planners today is the difficulty of developing robust and effective methods of studying public spaces that result in more informed decision making. At its core, this problem revolves around measuring *Public Life*, a term often referenced in Jan Gehl’s work that refers to citizens’ daily interactions with others within the built environment.
 
