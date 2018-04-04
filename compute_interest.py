@@ -129,17 +129,6 @@ def compute_center(bb):
 def produce_sample_data(start, end, interval):
 	return np_linspace(start, end, 50)
 
-#def produce_gaussian_data(mean, variance):
-#	return np.random.multivariate_normal(mean, variance, 30)
-
-#def calc_variance(data):
-#	nparr = np.asarray(data)
-#	return np.var(nparr)
-
-#def make_pdf(point, mean, variance):
-#	return multivariate_normal(mean=mean, cov=variance)
-
-
 # Container boxes, these should be drawn for each day, as there are changes in the position of the camera.
 #cb_left_0806 = [119, 262, 219, 322]
 
@@ -159,10 +148,6 @@ containers['0803']=[[0, 249, 239, 389], [493, 223 , 726, 375]]
 containers['0804']=[[108, 244, 284, 324], [419, 240 , 513, 290]]
 containers['0806']=[[0, 245, 251, 320], [442, 270 , 654, 332]]
 containers['charlotte'] = [[462, 305, 585, 430]]
-#cb_leftleft_0801 = [0, 264, 209, 393]
-#cb_left_0801 = [108, 223, 304, 341]
-#cb_right_0801 = [317, 234, 428, 310]
-
 
 
 def check_containment_and_ratio_2(direction_cbs, bb):
@@ -172,8 +157,6 @@ def check_containment_and_ratio_2(direction_cbs, bb):
 
 def make_num_people_arr(dicto_list):
 	return [(d['num_peeps'], d['img_timestamp'], d['bbs']) for d in dicto_list]
-	#return [(d['num_peeps'], d['img_timestamp']) for d in dicto_list]
-	#return [d['num_peeps'] for d in dicto_list]
 
 def make_dict_list(dicto):
 	return dicto.values()
@@ -281,12 +264,6 @@ def better_tuples(bbs_arr):
 	return new_arr
 
 
-
-# bbs: (0, u'2017:08:02 19:40:07'), (1, u'2017:08:02 19:40:09', {u'1': {u'coords': [352, 192, 400, 320], u'prob': 89}}), 
-# (1, u'2017:08:02 19:40:11', {u'1': {u'coords': [192, 96, 336, 416], u'prob': 95}}), (0, u'2017:08:02 19:49:41'),
-# (2, u'2017:08:02 20:13:59', {u'1': {u'coords': [336, 176, 400, 368], u'prob': 92}, u'2': {u'coords': [272, 176, 352, 368], u'prob': 90}})
-
-
 def parse_relevant_intervals(bbs_arr):
 
 	count_list = []
@@ -338,7 +315,6 @@ def compute_interestedness(relevant, seconds):
 	times = []
 	
 	for e in relevant:
-		#bb_list = relevant[3][1]
 		bb_list = e[1]
 		time_list = [ k[1] for k in bb_list ]
 		bbs_list = [ k[2] if k[0] > 1 else [k[2]] for k in bb_list ]
@@ -348,9 +324,6 @@ def compute_interestedness(relevant, seconds):
 		# And if they are proximal store the bbs that matched
 		# then check the bbs in second next frame to see if there is still a match
 		# If there is a match conclude that a person sticked and increment the count
-
-		#for j in cache_list:
-		#	print j
 
 		cache_list = []
 
@@ -375,13 +348,6 @@ def compute_interestedness(relevant, seconds):
 						if cached:
 							cache_list.append(cache)
 							times.append(time_list[i])
-
-		#for j in cache_list:
-		#	print j
-		#	print "-------------------"
-		#print time_list
-		#print "-------------------"
-		#print "-------------------"
 
 	return (sticked, cache_list, times)
 
@@ -477,12 +443,9 @@ def compute_clustered_duration_for_benches(times, day):
 	# cluster durations for each bench
 	# e.g. {'a':(total, [(duration_1, init_time), (duration_2, init_time)])}
 	
-	#clustered = [0]*6
 	clustered = [ [0]*6 for i in range(len(times)) ]
 	last_times = [ [0]*6 for i in range(len(times)) ] 
 	all_times = {}
-	#last_times = [0]*6
-	#durations = [0]*6
 	first_pair_times = {}
 	pairs = {}
 	together = {}
@@ -510,35 +473,21 @@ def compute_clustered_duration_for_benches(times, day):
 					first_pair_times[pair] = 0
 					all_times[pair] = []
 				if loc_proximity(loc_b, loc_a):
-					print pair
 					bench = match[i]
 					clustered[k][i] = 1
 					clustered[k][i+j+1] = 1
-					#last_times[k][i] = time[0]
-					#last_times[k][i+j+1] = time[0]
 					timestamp = parse(time[0])
 
 					if not (k == len(times)-1) :
-						print k
 
 						if not together[pair]:
-							#last_times[i] = timestamp
-							#last_times[i+j+1] = timestamp
 							first_pair_times[pair] = timestamp
 							together[pair] = True
-							all_times[pair].append(time[0])
-						#else :
-							#durations[i] += (timestamp - last_pair_times[pair]).total_seconds()
-							#durations[i+j+1] += (timestamp - last_pair_times[pair]).total_seconds()
-							#last_times[i] = timestamp
+							all_times[pair].append(time[0]
 	
 					else :
-						print "I'm here!"
 						pairs[pair] += (timestamp - first_pair_times[pair]).total_seconds()
 						all_times[pair].append(time[0])
-						#durations[i] += (timestamp - last_pair_times[pair]).total_seconds()
-						#durations[j+1] += (timestamp - last_times[j+1]).total_seconds()
-						#pairs[pair] += (timestamp - last_pair_times[pair]).total_seconds()
 				else :
 					timestamp = parse(time[0])
 					if together[pair]:
@@ -546,7 +495,6 @@ def compute_clustered_duration_for_benches(times, day):
 						pairs[pair] += (timestamp - first_pair_times[pair]).total_seconds()
 						all_times[pair].append(time[0])
 
-	#return zip(match, durations)
 	return clustered, all_times, first_pair_times, pairs
 
 
@@ -591,14 +539,12 @@ def filter_peeps(rows, day):
 				all_Xs.append(coords[0])
 				center, ratio, w, h = get_center_ratio_w_h(coords)
 
-				#if check_containment_and_ratio(coords, rat, cb_left_0801, cb_right_0801):
 				if check_containment_and_ratio(coords, rat, containers[day], all_left=True):
 					invalid += 1
 					invalid_keys.append(k)
 					invalid_already = True
 
 				if (w < differ_w or h < differ_h) and not invalid_already :
-					#print "this is far away!"
 					invalid += 1
 					invalid_keys.append(k)
 					invalid_already = True
@@ -622,7 +568,7 @@ def filter_peeps(rows, day):
 def remove_bad_stops(bbs_arr):
 
 	#concatenate intervals when a stop is not surrounded by values of 1
-    #accounts for people who may be double counted as a result of an issue with the machine recognizing people
+    	#accounts for people who may be double counted as a result of an issue with the machine recognizing people
 
 	new_bbs = []
 	templist = []
@@ -695,23 +641,7 @@ def main():
 	#relevant_with_bad_stops = parse_relevant_intervals(tups)
 	#relevant = remove_bad_stops(relevant_with_bad_stops)
 
-	#for f in [e[1] for e in relevant]:
-	#	print "stop"
-	#	print [ef[0] for ef in f]
-	
-	#print "----------------------"
-	#print "----------------------"
-	#print [e[0] for e in relevant]
-
 	#final_sticked, final_cache, times = compute_interestedness(relevant, 6)
-
-	#print final_sticked, final_cache, times
-	#print final_sticked
-	#print times
-	#print bbs
-
-	#for pair in bbs: 
-	#	print bbs
 	
 	locs = cl.plot_and_publish_locs(peeps_arr, benches_output_path, day, True)
 	clustered, all_times, first_pair_times, pairs = compute_clustered_duration_for_benches(locs, day)
@@ -719,15 +649,6 @@ def main():
 	keys.sort()
 	for k in keys:
 		print k, pairs[k], first_pair_times[k], all_times[k]
-
-	#for i in range(6):
-	#	print last_times[i*len(locs):(i+1)*len(locs)]
-
-	#for i in range(6):
-	#	print last_times[i*len(locs):(i+1)*len(locs)]
-		
-
-	#a = [pair for pair in pair_keys if "a" in pair]
 
 	#hop = compute_all_interested(relevant, [6, 8, 10, 12, 20, 30, 40], day)
 
